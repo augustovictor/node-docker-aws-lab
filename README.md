@@ -15,6 +15,7 @@
     - Keeps track of every container and how much resources they have;
     - EC2 instances are linked in a virtual prived cloud (VPC)
 - EC2 Agent: Containers orchestration
+- Security group: Where we define policies to who can access our instances, in what port.
 
 
 ## Commands
@@ -51,6 +52,19 @@ A network for our cluster
     - `10.17.0.0/16`
     - Tenacy
         - Dedicated: The chosen IP is no longer available for another usage (PAID)
+- Apply network to a security group
+
+## Security Group
+- Security group name: `ecs-sg-ohio`
+- Description: `US Ohio Security Group for ECS Cluster`
+- VPC: `... | ECS_VPC`
+- Add rules for Inbound and Outbound:
+    - `SSH TCP 22 Anywhere`
+    - `HTTPS TCP 443 Anywhere`
+    - `HTTP TCP 80 Anywhere`
+- Give the security group a name
+    - `ECS-Admin-SG`
+- Consider adding ssh access to specific IP addresses. The ones with the `.pem` file
 
 ### Container
 - Create an image
