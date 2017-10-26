@@ -1,0 +1,47 @@
+version: '2.1'
+
+services:
+    node-app:
+        container_name: node-app-aws
+        image: victoraweb/node-app-aws
+        build:
+            context: .
+            dockerfile: ./Dockerfile
+        ports:
+            - "3000:3000"
+        env_file:
+            - variables.env
+        volumes:
+            - .:/usr/app/aws-lab
+        networks:
+            - backend
+        command: node_modules/.bin/nodemon --exec npm start
+        depends_on:
+            mysql:
+                condition: service_healthy
+    
+    mysql:
+        image: mysql:8.0
+        restart: always
+        environment:
+            MYSQL_USER: nodeapp
+            MYSQL_PASSWORD: root
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_DATABASE: books-aws
+        healthcheck:
+            test: ["CMD", "curl", "-f", "http://localhost:3306"]
+            interval: 10s
+            timeout: 10s
+            retries: 5
+        ports:
+            - "3306:3306"
+        volumes:
+            - node-app-mysql:/var/lib/mysql
+        networks:
+            - backend
+
+networks:
+    backend:
+
+volumes:
+    node-app-mysql:

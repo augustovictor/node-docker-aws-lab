@@ -2,9 +2,9 @@ FROM node:8-alpine
 
 EXPOSE 3000
 
-RUN mkdir -p usr/app/books-app
+RUN mkdir -p usr/app/aws-lab
 
-WORKDIR usr/app/books-app
+WORKDIR usr/app/aws-lab
 
 COPY package.json .
 
